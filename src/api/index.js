@@ -1,4 +1,5 @@
 import axios from "axios";
+import get30DaysBefore from "../utils/helper.utils";
 
 const API_BASE_URL = "https://api.themoviedb.org/3/discover"; 
 
@@ -20,7 +21,8 @@ const API_URLS = {
 const Api = {
   getMovies: async (page = 1) => {
     try {
-      const url = API_URLS.getMovies + `?page=${page}&include_video=true&language=en-US&sort_by=popularity.desc`
+      const date = get30DaysBefore()
+      const url = API_URLS.getMovies + `?page=${page}&primary_release_date.gte=${date}&include_video=true&language=en-US&sort_by=popularity.desc`
       console.log(url)
       const response = await apiClient.get(url);
       return response.data;
